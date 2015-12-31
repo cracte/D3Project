@@ -15,4 +15,6 @@
 
 extern IDirect3DDevice9* g_pDevice;
 extern HWND g_hWnd;
-extern RECT g_winRect;
+
+static const int winWidth = 640;
+static const int winHigh = 480;

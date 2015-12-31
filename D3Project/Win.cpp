@@ -6,7 +6,7 @@ HINSTANCE g_hInst = NULL;
 HWND g_hWnd = NULL;
 IDirect3D9* g_pD3Direct = NULL;
 IDirect3DDevice9* g_pDevice = NULL;
-RECT g_winRect = { 0, 0, 640, 480};
+
 
 HRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 {
@@ -39,12 +39,12 @@ m_fpsCount( 0)
 		}
 		else
 		{
-			if( m_lastTime <= 0)
-				m_lastTime = timeGetTime();
 			DWORD nowTime = timeGetTime();
+			if( m_lastTime <= 0)
+				m_lastTime = nowTime;
 			float deltaTime = ( nowTime - m_lastTime)/1000.0f;
 			render( deltaTime);
-			m_lastTime = timeGetTime();
+			m_lastTime = nowTime;
 		}
 	}
 
@@ -78,7 +78,7 @@ bool CWin::InitWindow( )
 
 	// Create window
 	g_hInst = hInstance;
-	RECT rc = g_winRect;
+	RECT rc = {0, 0, winWidth, winHigh}; //window窗口原点在左上角，left,top = 0
 	AdjustWindowRect( &rc, WS_OVERLAPPEDWINDOW, FALSE );
 	g_hWnd = CreateWindow( "className", "windowName", WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, hInstance,
@@ -200,15 +200,6 @@ bool CWin::keyDown( WPARAM wParam)
 
 void CWin::render( float dt)
 {
-	time_t nowTime;
-	time( &nowTime);
-	calcFPS( dt);
-	//static SYSTEMTIME time;
-	//time_t lastTime = mktime( time);
-	//GetLocalTime( &time);
-	//time_t timeNow = mktime( time);
-	//float deltaTime = timeNow - lastTime;
-
 	if( !g_pDevice)
 		return;
 	g_pDevice->Clear( 0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(255,255,255), 1.0f, 0);
@@ -226,6 +217,7 @@ void CWin::render( float dt)
 		//texture.setTexture();
 		//camera->move( 0.01);
 		mesh->useMesh();
+		calcFPS( dt);
 		//g_pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);//设置渲染模式
 		g_pDevice->EndScene();
 	}
@@ -233,25 +225,38 @@ void CWin::render( float dt)
 	g_pDevice->Present( NULL, NULL, NULL, NULL);
 }
 
+//void CWin::calcFPS( float dt)
+//{
+//	m_fpsTime += dt;
+//	m_fpsCount++;
+//	if( m_fpsTime >= 1.0f)
+//	{
+//		float fps = m_fpsCount/m_fpsTime;
+//		Log( "fps == %f", fps);
+//
+//		m_fpsTime = 0.0f;
+//		m_fpsCount = 0;
+//	}
+//	RECT rect = {0,0,winWidth,winHigh};
+//	CFont font;
+//	font.drawText( "dfeafed", &rect);
+//}
+
 void CWin::calcFPS( float dt)
 {
 	m_fpsTime += dt;
 	m_fpsCount++;
+	float fps = m_fpsCount/m_fpsTime;
+	char str[512];
+	sprintf( str, "FPS:%f", fps);
+	RECT rect = {0,0,winWidth,winHigh};
+	CFont font;
+	font.drawText( str, &rect); //DrawText必须在BeginScene()与EndScene()中一直调用，才能绘制文字，停止调用，文字就会消失
+
 	if( m_fpsTime >= 1.0f)
 	{
+		
 		m_fpsTime = 0.0f;
 		m_fpsCount = 0;
-
-		float fps = m_fpsCount/m_fpsTime;
-		Log( "fps == %f", fps);
 	}
-	RECT winRect;
-	GetWindowRect( g_hWnd, &winRect);
-	RECT rect;
-	rect.right = g_winRect.right;
-	rect.top = g_winRect.bottom;
-	rect.left = rect.right - 100;
-	rect.bottom = rect.top - 100;
-	CFont font;
-	font.drawText( "dfeafed", &rect);
 }

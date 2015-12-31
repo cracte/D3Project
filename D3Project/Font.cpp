@@ -20,8 +20,8 @@ CFont::~CFont()
 	m_font->Release();
 }
 
-void CFont::drawText( char* str, RECT* rect)
+void CFont::drawText( char* str, RECT* rect, DWORD colour)
 {
-	m_font->DrawTextA( NULL, str, -1, rect,DT_TOP|DT_RIGHT, 0xff000000);
+	m_font->DrawTextA( NULL, str, -1, rect,DT_TOP|DT_RIGHT, colour);
 	return;
 }
