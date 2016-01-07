@@ -12,6 +12,8 @@
 #include <d3d9.h>
 #include <d3dx9math.h>
 #include <d3dx9tex.h>
+#include <vector>
+using namespace std;
 
 extern IDirect3DDevice9* g_pDevice;
 extern HWND g_hWnd;

@@ -169,6 +169,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CameraTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Common.cpp"
 				>
 			</File>
@@ -204,6 +208,10 @@
 				RelativePath=".\Win.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\XMesh.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -216,6 +224,10 @@
 			</File>
 			<File
 				RelativePath=".\Camera.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CameraTest.h"
 				>
 			</File>
 			<File
@@ -248,6 +260,10 @@
 			</File>
 			<File
 				RelativePath=".\Win.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XMesh.h"
 				>
 			</File>
 		</Filter>

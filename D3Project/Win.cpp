@@ -6,6 +6,7 @@ HINSTANCE g_hInst = NULL;
 HWND g_hWnd = NULL;
 IDirect3D9* g_pD3Direct = NULL;
 IDirect3DDevice9* g_pDevice = NULL;
+static const bool showFPS = false;
 
 
 HRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
@@ -27,8 +28,8 @@ m_fpsCount( 0)
 	// Main message loop
 	MSG msg = {0};
 	camera = new Camera;
-	mesh = new CMesh( "tiger.x");
-	light = new CLight;
+	mesh = new CXMesh( "tiger.x");
+	light = new CLight( LightType_Point);
 	light->useLight();
 	while( WM_QUIT != msg.message )
 	{
@@ -113,7 +114,6 @@ HRESULT CWin::WndProcMsg( UINT message, WPARAM wParam, LPARAM lParam )
 		break;
 	case WM_RBUTTONDOWN:
 		{
-			//m_btnDownPoint = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
 			m_btnDownPoint.x = (short)LOWORD(lParam);
 			m_btnDownPoint.y = (short)HIWORD(lParam);
 			m_isBtnDown = true;
@@ -121,17 +121,10 @@ HRESULT CWin::WndProcMsg( UINT message, WPARAM wParam, LPARAM lParam )
 		break;
 	case WM_MOUSEMOVE:
 		{
-			//camera->rotate( point.x - m_lastPoint.x, point.y - m_lastPoint.y);
-			//camera->rotate( point.x, 10);
-			//char str[512];
-			//sprintf( str, "%d, %d\n", point.x, point.y);
-			//OutputDebugString( str);
 			if( m_isBtnDown)
 			{
 				POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-				//camera->rotate( point.x - m_btnDownPoint.x, point.y - m_btnDownPoint.y);
-				camera->rotateX( point.x - m_btnDownPoint.x);
-				camera->rotateZ( point.y - m_btnDownPoint.y);
+				camera->rotate( (point.x - m_btnDownPoint.x)/100.0f, (point.y - m_btnDownPoint.y)/100.0f);
 				m_btnDownPoint.x = point.x;
 				m_btnDownPoint.y = point.y;
 			}
@@ -195,6 +188,11 @@ bool CWin::keyDown( WPARAM wParam)
 	{
 		camera->move( 0.0f, -0.1f);
 	}
+	if( wParam == 'R')
+	{
+		D3DXVECTOR3 pos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
+		camera->setPosition( &pos);
+	}
 	return true;
 }
 
@@ -206,41 +204,15 @@ void CWin::render( float dt)
 
 	if(SUCCEEDED( g_pDevice->BeginScene()))
 	{
-		//CVertexDraw::createVertex();
-		//CLight light;
-		//light.setLight();
-		//CMaterial mat;
-		//mat.setMaterial();
-
-		//CVertexDraw::createCylinder();
-		//CTexture texture;
-		//texture.setTexture();
-		//camera->move( 0.01);
 		mesh->useMesh();
-		calcFPS( dt);
+		if( showFPS)
+			calcFPS( dt);
 		//g_pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);//ÉèÖÃäÖÈ¾Ä£Ê½
 		g_pDevice->EndScene();
 	}
 
 	g_pDevice->Present( NULL, NULL, NULL, NULL);
 }
-
-//void CWin::calcFPS( float dt)
-//{
-//	m_fpsTime += dt;
-//	m_fpsCount++;
-//	if( m_fpsTime >= 1.0f)
-//	{
-//		float fps = m_fpsCount/m_fpsTime;
-//		Log( "fps == %f", fps);
-//
-//		m_fpsTime = 0.0f;
-//		m_fpsCount = 0;
-//	}
-//	RECT rect = {0,0,winWidth,winHigh};
-//	CFont font;
-//	font.drawText( "dfeafed", &rect);
-//}
 
 void CWin::calcFPS( float dt)
 {

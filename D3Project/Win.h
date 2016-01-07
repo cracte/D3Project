@@ -4,7 +4,7 @@
 #include "Material.h"
 #include "Light.h"
 #include "Texture.h"
-#include "Mesh.h"
+#include "XMesh.h"
 #include "Camera.h"
 #include "Font.h"
 
@@ -36,7 +36,7 @@ private:
 	void calcFPS( float dt);
 
 	Camera* camera;
-	CMesh* mesh;
+	CXMesh* mesh;
 	CLight* light;
 
 	POINT m_lastPoint;
