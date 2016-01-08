@@ -7,6 +7,7 @@
 #include "XMesh.h"
 #include "Camera.h"
 #include "Font.h"
+#include "Mesh.h"
 
 class CWin
 {
@@ -38,6 +39,7 @@ private:
 	Camera* camera;
 	CXMesh* mesh;
 	CLight* light;
+	CMesh* m_mesh;
 
 	POINT m_lastPoint;
 	POINT m_btnDownPoint;

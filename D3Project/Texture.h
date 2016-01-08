@@ -15,6 +15,14 @@ enum Mipmaps_Type
 	Mipmaps_Linear,
 };
 
+enum AddressMode_Type
+{
+	AddressMode_Wrap, //»·ÈÆÑ°Ö·
+	AddressMode_Border, //±ß¿òÑ°Ö·
+	AddressMode_Clamp, //½ØÈ¡Ñ°Ö·
+	AddressMode_Mirror, //¾µÏñÑ°Ö·
+};
+
 class CTexture
 {
 public:
@@ -25,6 +33,7 @@ public:
 
 	void setSampler( Sampler_Type type, int level = 0); //ÉèÖÃ²ÉÑùÆ÷
 	void setMipmaps( Mipmaps_Type type);//ÉèÖÃ¹ıÂËÆ÷
+	void setAddressMode( AddressMode_Type type);//ÉèÖÃÑ°Ö·Ä£Ê½
 
 private:
 	IDirect3DTexture9* m_pTexture;

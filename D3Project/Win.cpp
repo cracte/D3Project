@@ -29,7 +29,7 @@ m_fpsCount( 0)
 	MSG msg = {0};
 	camera = new Camera;
 	mesh = new CXMesh( "tiger.x");
-	light = new CLight( LightType_Point);
+	light = new CLight( LightType_Directional);
 	light->useLight();
 	while( WM_QUIT != msg.message )
 	{

@@ -57,3 +57,28 @@ void CTexture::setMipmaps( Mipmaps_Type type)
 		g_pDevice->SetSamplerState( 0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
 	}
 }
+
+void CTexture::setAddressMode( AddressMode_Type type)
+{
+	if( type == AddressMode_Wrap)
+	{
+		g_pDevice->SetSamplerState( 0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP); //ÎÆÀíuÖá
+		g_pDevice->SetSamplerState( 0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP); //ÎÆÀívÖá
+	}
+	else if( type == AddressMode_Border)
+	{
+		g_pDevice->SetSamplerState( 0, D3DSAMP_ADDRESSU, D3DTADDRESS_BORDER);
+		g_pDevice->SetSamplerState( 0, D3DSAMP_ADDRESSV, D3DTADDRESS_BORDER);
+		g_pDevice->SetSamplerState( 0, D3DSAMP_BORDERCOLOR, 0xffffffff); //±ß¿òÑÕÉ«
+	}
+	else if( type == AddressMode_Clamp)
+	{
+		g_pDevice->SetSamplerState( 0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+		g_pDevice->SetSamplerState( 0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
+	}
+	else if( type == AddressMode_Mirror)
+	{
+		g_pDevice->SetSamplerState( 0, D3DSAMP_ADDRESSU, D3DTADDRESS_MIRROR);
+		g_pDevice->SetSamplerState( 0, D3DSAMP_ADDRESSV, D3DTADDRESS_MIRROR);
+	}
+}
