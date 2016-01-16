@@ -193,6 +193,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Mirror.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\projectMain.cpp"
 				>
 			</File>
@@ -248,6 +252,10 @@
 			</File>
 			<File
 				RelativePath=".\Mesh.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Mirror.h"
 				>
 			</File>
 			<File

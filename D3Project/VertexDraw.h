@@ -10,4 +10,6 @@ public:
 	void static createVertex();
 
 	void static createCylinder();
+
+	void static createSquare();
 };

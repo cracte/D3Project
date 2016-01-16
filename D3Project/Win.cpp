@@ -154,6 +154,8 @@ bool CWin::initD3()
 	d3dpp.Windowed = TRUE;
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
 	d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
+	d3dpp.EnableAutoDepthStencil = true; //设置深度缓存可用
+	d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8; //创建深度缓存,24位模板缓存，8位深度缓存
 
 	HRESULT hr = g_pD3Direct->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &g_pDevice);
 	if( FAILED( hr))
@@ -200,13 +202,17 @@ void CWin::render( float dt)
 {
 	if( !g_pDevice)
 		return;
-	g_pDevice->Clear( 0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(255,255,255), 1.0f, 0);
+	g_pDevice->Clear( 0, NULL, D3DCLEAR_TARGET|D3DCLEAR_STENCIL|D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(255,255,255), 1.0f, 0);
 
 	if(SUCCEEDED( g_pDevice->BeginScene()))
 	{
+		CVertexDraw::createSquare();
+
 		mesh->useMesh();
+
 		if( showFPS)
 			calcFPS( dt);
+
 		//g_pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);//设置渲染模式
 		g_pDevice->EndScene();
 	}

@@ -39,7 +39,6 @@ private:
 	Camera* camera;
 	CXMesh* mesh;
 	CLight* light;
-	CMesh* m_mesh;
 
 	POINT m_lastPoint;
 	POINT m_btnDownPoint;
