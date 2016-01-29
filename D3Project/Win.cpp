@@ -31,6 +31,7 @@ m_fpsCount( 0)
 	mesh = new CXMesh( "tiger.x");
 	light = new CLight( LightType_Directional);
 	light->useLight();
+	mir = new CMirror;
 	while( WM_QUIT != msg.message )
 	{
 		if( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
@@ -206,9 +207,10 @@ void CWin::render( float dt)
 
 	if(SUCCEEDED( g_pDevice->BeginScene()))
 	{
-		CVertexDraw::createSquare();
+		CVertexDraw::createMirrorSquare();
 
 		mesh->useMesh();
+		mir->renderMirror( mesh);
 
 		if( showFPS)
 			calcFPS( dt);

@@ -82,3 +82,28 @@ void CTexture::setAddressMode( AddressMode_Type type)
 		g_pDevice->SetSamplerState( 0, D3DSAMP_ADDRESSV, D3DTADDRESS_MIRROR);
 	}
 }
+
+//开启混合渲染完之后要关闭混合
+void CTexture::setBlend( bool isUseBlend, BlendType type)
+{
+	g_pDevice->SetRenderState( D3DRS_ALPHABLENDENABLE, isUseBlend); //开启alpha值混合
+
+	if( isUseBlend)
+	{
+		g_pDevice->SetRenderState( D3DRS_SRCBLEND, D3DBLEND_SRCALPHA); //设置原资源混合模式
+		g_pDevice->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA); //设置混合资源混合模式
+
+		if( type == BlendType_Diffuse)
+		{
+			//设置alpha资源为材质
+			g_pDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+			g_pDevice->SetTextureStageState( 0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
+		}
+		else if( type == BlendType_Texture)
+		{
+			//设置alpha资源为纹理的alpha通道
+			g_pDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+			g_pDevice->SetTextureStageState( 0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+		}
+	}
+}

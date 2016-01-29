@@ -23,6 +23,12 @@ enum AddressMode_Type
 	AddressMode_Mirror, //镜像寻址
 };
 
+enum BlendType
+{
+	BlendType_Diffuse, //顶点(材质)混合
+	BlendType_Texture, //纹理混合
+};
+
 class CTexture
 {
 public:
@@ -34,6 +40,8 @@ public:
 	void setSampler( Sampler_Type type, int level = 0); //设置采样器
 	void setMipmaps( Mipmaps_Type type);//设置过滤器
 	void setAddressMode( AddressMode_Type type);//设置寻址模式
+
+	void setBlend( bool isUseBlend, BlendType type = BlendType_Diffuse); //混合
 
 private:
 	IDirect3DTexture9* m_pTexture;

@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Font.h"
 #include "Mesh.h"
+#include "Mirror.h"
 
 class CWin
 {
@@ -39,6 +40,7 @@ private:
 	Camera* camera;
 	CXMesh* mesh;
 	CLight* light;
+	CMirror* mir;
 
 	POINT m_lastPoint;
 	POINT m_btnDownPoint;

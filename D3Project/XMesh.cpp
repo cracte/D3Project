@@ -15,10 +15,13 @@ m_pMeshNormal( NULL)
 	for( DWORD i=0; i<m_numOfMatrial; i++)
 	{
 		m_pMeshMaterials[i] = materal[i].MatD3D;  //材质
-		m_pMeshMaterials[i].Ambient = m_pMeshMaterials[i].Diffuse; //材质中没有环境光，所以设置为漫反射光
+		
 		//m_pMeshMaterials[i].Diffuse = D3DXCOLOR( 0xffffffff); //漫反射光
 		//m_pMeshMaterials[i].Specular = D3DXCOLOR( 0xffffffff); //镜面反射光
 		//m_pMeshMaterials[i].Emissive = D3DXCOLOR( 0xffffffff); //发射光
+
+		m_pMeshMaterials[i].Ambient = m_pMeshMaterials[i].Diffuse; //这个材质中没有环境光，所以设置为漫反射光
+
 		char resPath[512];
 		sprintf( resPath, "../Resource/Texture/%s", materal[i].pTextureFilename);  //纹理
 		HRESULT hr = D3DXCreateTextureFromFile( g_pDevice, resPath, &m_pMeshTextures[i]);
@@ -91,6 +94,20 @@ void CXMesh::useMesh()
 	//}
 }
 
+void CXMesh::useMeshNoTexture()
+{
+	D3DXMATRIX worldMat;
+	D3DXMatrixTranslation( &worldMat, 0.0f, 0.0f, 5.0f);  //坐标转换为矩阵
+	g_pDevice->SetTransform( D3DTS_WORLD, &worldMat);  //设置世界坐标位置
+	for( DWORD i=0; i<m_numOfMatrial; i++)
+	{
+		g_pDevice->SetMaterial( &m_pMeshMaterials[i]);	//设置材质
+		g_pDevice->SetTexture( 0, 0);	//设置纹理
+		m_pMesh->DrawSubset( i);	//渲染网格
+	}
+
+}
+
 void CXMesh::setProgressiveMesh( int Level /* = 10 */)
 {
 	int maxFace = m_pProgressiveMesh->GetMaxFaces();
@@ -131,29 +148,5 @@ void CXMesh::showBoundingSphere( bool isShow)
 		D3DXComputeBoundingSphere( (D3DXVECTOR3*)vertexBuff, m_pMesh->GetNumVertices(), m_pMesh->GetNumBytesPerVertex(), &center, &radius);//计算包围球
 		D3DXCreateSphere( g_pDevice, radius, 200, 5, &pSphereMesh, NULL);
 		pSphereMesh->DrawSubset( 0);
-	}
-}
-
-void CXMesh::setBlend( bool isUseBlend, BlendType type)
-{
-	g_pDevice->SetRenderState( D3DRS_ALPHABLENDENABLE, isUseBlend); //开启alpha值混合
-
-	if( isUseBlend)
-	{
-		g_pDevice->SetRenderState( D3DRS_SRCBLEND, D3DBLEND_SRCCOLOR); //设置原资源混合模式
-		g_pDevice->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_DESTCOLOR); //设置混合资源混合模式
-
-		if( type == BlendType_Diffuse)
-		{
-			//设置alpha资源为材质(顶点颜色)
-			g_pDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
-			g_pDevice->SetTextureStageState( 0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
-		}
-		else if( type == BlendType_Texture)
-		{
-			//设置alpha资源为纹理的alpha通道
-			g_pDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
-			g_pDevice->SetTextureStageState( 0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
-		}
 	}
 }

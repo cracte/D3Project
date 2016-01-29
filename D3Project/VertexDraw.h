@@ -12,4 +12,6 @@ public:
 	void static createCylinder();
 
 	void static createSquare();
+
+	void static createMirrorSquare();
 };
