@@ -2,24 +2,6 @@
 #include "Texture.h"
 #include "Material.h"
 
-struct Vertex
-{
-	Vertex(){}
-	Vertex(float x, float y, float z, 
-		float nx, float ny, float nz,
-		float u, float v)
-	{
-		_x  = x;  _y  = y;  _z  = z;
-		_nx = nx; _ny = ny; _nz = nz;
-		_u  = u;  _v  = v;
-	}
-	float _x, _y, _z;
-	float _nx, _ny, _nz;
-	float _u, _v;
-
-	static const DWORD FVF;
-};
-const DWORD Vertex::FVF = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;
 
 CVertexDraw::CVertexDraw()
 {
@@ -161,34 +143,4 @@ void CVertexDraw::createCylinder()
 	hr = g_pDevice->SetStreamSource( 0, pVeretxBuffer, 0, sizeof(CUSTOMVERTEX));
 	hr = g_pDevice->SetFVF( FVF);
 	hr = g_pDevice->DrawPrimitive( D3DPT_TRIANGLESTRIP, 0, 2 * 50 - 2);
-}
-
-void CVertexDraw::createMirrorSquare()
-{
-	IDirect3DVertexBuffer9* pVeretxBuffer = NULL;
-	if( FAILED( g_pDevice->CreateVertexBuffer( 6*sizeof(Vertex),
-		0 , Vertex::FVF,
-		D3DPOOL_DEFAULT, &pVeretxBuffer, NULL ) ) )
-		return;
-
-	Vertex* v = NULL;
-	pVeretxBuffer->Lock( 0, 0, (void**)&v, 0);
-
-	v[0] = Vertex(-2.5f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f);
-	v[1] = Vertex(-2.5f, 5.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f);
-	v[2] = Vertex( 2.5f, 5.0f, 0.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f);
-
-	v[3] = Vertex(-2.5f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f);
-	v[4] = Vertex( 2.5f, 5.0f, 0.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f);
-	v[5] = Vertex( 2.5f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f);
-
-	HRESULT hr = pVeretxBuffer->Unlock();
-	hr = g_pDevice->SetStreamSource( 0, pVeretxBuffer, 0, sizeof(Vertex));
-	hr = g_pDevice->SetFVF( Vertex::FVF);
-
-	//CMaterial mat(D3DXCOLOR(0xfff0f0f0));
-	//mat.useMaterial();
-	//CTexture texture( "banana.bmp");
-	//texture.useTexture();
-	hr = g_pDevice->DrawPrimitive( D3DPT_TRIANGLESTRIP, 0, 2);
 }

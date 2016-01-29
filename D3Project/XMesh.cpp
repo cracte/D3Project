@@ -2,7 +2,8 @@
 
 CXMesh::CXMesh( char* fileName):
 m_pMesh( NULL),
-m_pMeshNormal( NULL)
+m_pMeshNormal( NULL),
+m_position( 0.0f, 0.0f, 0.0f)
 {
 	char meshName[512];
 	sprintf( meshName, "../Resource/Mesh/%s", fileName);
@@ -72,7 +73,7 @@ CXMesh::~CXMesh()
 void CXMesh::useMesh()
 {
 	D3DXMATRIX worldMat;
-	D3DXMatrixTranslation( &worldMat, 0.0f, 0.0f, 5.0f);  //坐标转换为矩阵
+	D3DXMatrixTranslation( &worldMat, m_position.x, m_position.y, m_position.z);  //坐标转换为矩阵
 	g_pDevice->SetTransform( D3DTS_WORLD, &worldMat);  //设置世界坐标位置
 	for( DWORD i=0; i<m_numOfMatrial; i++)
 	{
@@ -80,32 +81,16 @@ void CXMesh::useMesh()
 		g_pDevice->SetTexture( 0, m_pMeshTextures[i]);	//设置纹理
 		m_pMesh->DrawSubset( i);	//渲染网格
 	}
-
-	//D3DXMatrixTranslation( &worldMat, 1.0f, 0.0f, 5.0f);  //坐标转换为矩阵
-	//g_pDevice->SetTransform( D3DTS_WORLD, &worldMat);  //设置世界坐标位置
-	//for( DWORD i=0; i<m_numOfMatrial; i++)
-	//{
-	//	g_pDevice->SetMaterial( &m_pMeshMaterials[i]);	//设置材质
-	//	g_pDevice->SetTexture( 0, m_pMeshTextures[i]);	//设置纹理
-	//	if( m_pMeshNormal)
-	//	{
-	//		m_pMeshNormal->DrawSubset( i);	//渲染网格
-	//	}
-	//}
 }
 
-void CXMesh::useMeshNoTexture()
+void CXMesh::drawMesh()
 {
-	D3DXMATRIX worldMat;
-	D3DXMatrixTranslation( &worldMat, 0.0f, 0.0f, 5.0f);  //坐标转换为矩阵
-	g_pDevice->SetTransform( D3DTS_WORLD, &worldMat);  //设置世界坐标位置
 	for( DWORD i=0; i<m_numOfMatrial; i++)
 	{
 		g_pDevice->SetMaterial( &m_pMeshMaterials[i]);	//设置材质
-		g_pDevice->SetTexture( 0, 0);	//设置纹理
+		g_pDevice->SetTexture( 0, m_pMeshTextures[i]);	//设置纹理
 		m_pMesh->DrawSubset( i);	//渲染网格
 	}
-
 }
 
 void CXMesh::setProgressiveMesh( int Level /* = 10 */)
@@ -149,4 +134,11 @@ void CXMesh::showBoundingSphere( bool isShow)
 		D3DXCreateSphere( g_pDevice, radius, 200, 5, &pSphereMesh, NULL);
 		pSphereMesh->DrawSubset( 0);
 	}
+}
+
+void CXMesh::setPosition( float x, float y, float z)
+{
+	m_position.x = x;
+	m_position.y = y;
+	m_position.z = z;
 }

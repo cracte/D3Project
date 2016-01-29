@@ -25,7 +25,7 @@ void Camera::setProjectMatrix()
 	float fovy = D3DX_PI/4;//视野夹角，眼睛上下距离能看见的夹角
 	float aspect = winWidth/winHigh;  //窗口宽高比
 	float zn = 0.0f; //前裁剪距离,摄像机最近视野
-	float zf = 100.0f; //后裁剪距离，摄像机最大视野范围
+	float zf = 1000.0f; //后裁剪距离，摄像机最大视野范围
 	D3DXMatrixPerspectiveFovLH(&projectMateral, fovy, aspect, zn, zf);
 	g_pDevice->SetTransform( D3DTS_PROJECTION, &projectMateral);  //设置投影坐标
 }

@@ -8,13 +8,14 @@ public:
 	~CXMesh();
 
 	void useMesh();
-	void useMeshNoTexture();
 
 	void setProgressiveMesh( int Level = 10);
 
 	void showBoundingBox( bool isShow);
 	void showBoundingSphere( bool isShow);
-
+	void setPosition( float x, float y, float z);
+	D3DXVECTOR3 getPosition(){ return m_position; }
+	void drawMesh();
 	
 private:
 	ID3DXBuffer* m_pMatrialBuffer;
@@ -27,4 +28,6 @@ private:
 
 	D3DMATERIAL9* m_pMeshMaterials; //≤ƒ÷ 
 	IDirect3DTexture9** m_pMeshTextures; //Œ∆¿Ì
+
+	D3DXVECTOR3 m_position;
 };

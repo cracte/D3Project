@@ -75,7 +75,7 @@ void CLight::useLight()
 
 void CLight::enableSpeular( bool isEnable)
 {
-	g_pDevice->SetRenderState( D3DRS_SPECULARENABLE, true);//关闭镜面反射光计算
+	g_pDevice->SetRenderState( D3DRS_SPECULARENABLE, isEnable);//关闭镜面反射光计算
 }
 
 void CLight::setPosition( D3DXVECTOR3* pos)
