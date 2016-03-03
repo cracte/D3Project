@@ -209,6 +209,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\VertexShader.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Win.cpp"
 				>
 			</File>
@@ -264,6 +268,10 @@
 			</File>
 			<File
 				RelativePath=".\VertexDraw.h"
+				>
+			</File>
+			<File
+				RelativePath=".\VertexShader.h"
 				>
 			</File>
 			<File

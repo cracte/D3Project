@@ -41,6 +41,7 @@ private:
 	CXMesh* mesh;
 	CLight* light;
 	CMirror* mir;
+	CVertexShader* m_pShader;
 
 	POINT m_lastPoint;
 	POINT m_btnDownPoint;

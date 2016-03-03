@@ -13,6 +13,8 @@
 #include <d3dx9math.h>
 #include <d3dx9tex.h>
 #include <vector>
+#include "Common.h"
+
 using namespace std;
 
 extern IDirect3DDevice9* g_pDevice;

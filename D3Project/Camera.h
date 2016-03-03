@@ -22,11 +22,11 @@ public:
 	void move( float x, float z);
 	void rotate( float x, float y);
 
+	void getViewMatrix( D3DXMATRIX* view);
+
 private:
 	D3DXVECTOR3 m_position;
 	D3DXVECTOR3 m_right;
 	D3DXVECTOR3 m_up;
 	D3DXVECTOR3 m_look;
-
-	void getViewMatrix( D3DXMATRIX* view);
 };
