@@ -197,6 +197,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PixelShader.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\projectMain.cpp"
 				>
 			</File>
@@ -260,6 +264,10 @@
 			</File>
 			<File
 				RelativePath=".\Mirror.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PixelShader.h"
 				>
 			</File>
 			<File

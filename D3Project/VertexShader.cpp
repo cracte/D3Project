@@ -13,7 +13,7 @@ CVertexShader::CVertexShader( )
 	g_pDevice->CreateVertexDeclaration( vetexDec, &m_pDeclaration);
 
 	//编译顶点着色器
-	D3DXCompileShaderFromFile( "../Resource/shader/shader.hlsl", NULL, NULL, "main", "vs_2_0", D3DXSHADER_DEBUG, &m_pShader, &m_pErrorMsg, &m_pConstantTable);
+	D3DXCompileShaderFromFile( "../Resource/shader/vertex.hlsl", NULL, NULL, "main", "vs_2_0", D3DXSHADER_DEBUG, &m_pShader, &m_pErrorMsg, &m_pConstantTable);
 	if( m_pErrorMsg)
 	{
 		Log( (char*)m_pErrorMsg->GetBufferPointer());
@@ -27,13 +27,18 @@ CVertexShader::CVertexShader( )
 
 CVertexShader::~CVertexShader()
 {
-
+	m_pShader->Release();
+	m_pVertexShader->Release();
+	m_pConstantTable->Release();
 }
 
 void CVertexShader::setConstant(D3DXMATRIX* matrix)
 {
+	//设置顶点声明
+	g_pDevice->SetVertexDeclaration( m_pDeclaration);
 	//设置常量
 	D3DXHANDLE viewMatrix = m_pConstantTable->GetConstantByName( NULL, "viewMat");
 	m_pConstantTable->SetMatrix( g_pDevice, viewMatrix, matrix);
+	//设置着色器
 	g_pDevice->SetVertexShader( m_pVertexShader);
 }
