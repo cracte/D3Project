@@ -9,6 +9,7 @@
 #include "Font.h"
 #include "Mesh.h"
 #include "Mirror.h"
+#include "PixelShader.h"
 
 class CWin
 {
@@ -42,6 +43,7 @@ private:
 	CLight* light;
 	CMirror* mir;
 	CVertexShader* m_pShader;
+	CPixelShader* m_pPixelShader;
 
 	POINT m_lastPoint;
 	POINT m_btnDownPoint;

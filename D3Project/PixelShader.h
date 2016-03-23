@@ -7,6 +7,7 @@ public:
 	CPixelShader();
 	~CPixelShader();
 
+	void setConstant();
 	void setShader();
 
 private:

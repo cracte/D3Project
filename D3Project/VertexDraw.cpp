@@ -115,8 +115,9 @@ void CVertexDraw::createCylinder()
 		D3DXVECTOR3 position; // The 3D position for the vertex.
 		D3DXVECTOR3 normal;   // The surface normal for the vertex.
 		FLOAT tu, tv;
+		FLOAT tu2, tv2;
 	};
-	static const DWORD FVF = (D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_TEX1);
+	static const DWORD FVF = (D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_TEX2);
 
 	IDirect3DVertexBuffer9* pVeretxBuffer = NULL;
 	if( FAILED( g_pDevice->CreateVertexBuffer( 50*2*sizeof(CUSTOMVERTEX),
@@ -133,11 +134,15 @@ void CVertexDraw::createCylinder()
 		pVertices[2*i+0].position = D3DXVECTOR3( sinf(theta),-1.0f, cosf(theta) );
 		pVertices[2*i+0].tu       = ((FLOAT)i)/(50-1);
 		pVertices[2*i+0].tv       = 1.0f;
+		pVertices[2*i+0].tu2       = ((FLOAT)i)/(50-1);
+		pVertices[2*i+0].tv2       = 1.0f;
 		pVertices[2*i+0].normal   = D3DXVECTOR3( sinf(theta), 0.0f, cosf(theta) );
 		pVertices[2*i+1].position = D3DXVECTOR3( sinf(theta), 1.0f, cosf(theta) );
 		pVertices[2*i+1].normal   = D3DXVECTOR3( sinf(theta), 0.0f, cosf(theta) );
 		pVertices[2*i+1].tu       = ((FLOAT)i)/(50-1);
 		pVertices[2*i+1].tv       = 0.0f;
+		pVertices[2*i+1].tu2       = ((FLOAT)i)/(50-1);
+		pVertices[2*i+1].tv2       = 0.0f;
 	}
 	HRESULT hr = pVeretxBuffer->Unlock();
 	hr = g_pDevice->SetStreamSource( 0, pVeretxBuffer, 0, sizeof(CUSTOMVERTEX));

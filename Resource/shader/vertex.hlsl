@@ -1,10 +1,10 @@
-matrix viewMat;
+matrix viewMat; //变换矩阵
 vector color = {1.0f, 0.0f, 1.0f, 1.0f};
 
 struct VS_INPUT
 {
-	vector color : COLOR;
-	vector position : POSITION;
+	vector color : COLOR; //顶点颜色
+	vector position : POSITION; //顶点坐标
 };
 
 struct VS_OUTPUT

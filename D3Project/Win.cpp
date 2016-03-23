@@ -33,6 +33,7 @@ m_fpsCount( 0)
 	light->useLight();
 	//mir = new CMirror;
 	m_pShader = new CVertexShader;
+	m_pPixelShader = new CPixelShader;
 	while( WM_QUIT != msg.message )
 	{
 		if( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
@@ -211,6 +212,7 @@ void CWin::render( float dt)
 		D3DXMATRIX viewMatrix;
 		camera->getViewMatrix( &viewMatrix);
 		m_pShader->setConstant( &viewMatrix);
+		//m_pPixelShader->setShader();
 		//mir->drawMirror(); //绘制镜子
 		mesh->setPosition( 0.0,0.0,4);
 		mesh->useMesh();
@@ -232,7 +234,7 @@ void CWin::calcFPS( float dt)
 	m_fpsCount++;
 	float fps = m_fpsCount/m_fpsTime;
 	char str[512];
-	sprintf( str, "FPS:%f", fps);
+	sprintf_s( str, "FPS:%f", fps);
 	RECT rect = {0,0,winWidth,winHigh};
 	CFont font;
 	font.drawText( str, &rect); //DrawText必须在BeginScene()与EndScene()中一直调用，才能绘制文字，停止调用，文字就会消失
