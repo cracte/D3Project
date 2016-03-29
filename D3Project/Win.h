@@ -10,6 +10,7 @@
 #include "Mesh.h"
 #include "Mirror.h"
 #include "PixelShader.h"
+#include "ShaderEffect.h"
 
 class CWin
 {
@@ -44,6 +45,7 @@ private:
 	CMirror* mir;
 	CVertexShader* m_pShader;
 	CPixelShader* m_pPixelShader;
+	CShaderEffect* m_pShaderEffect;
 
 	POINT m_lastPoint;
 	POINT m_btnDownPoint;

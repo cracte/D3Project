@@ -28,12 +28,14 @@ m_fpsCount( 0)
 	// Main message loop
 	MSG msg = {0};
 	camera = new Camera;
-	mesh = new CXMesh( "tiger.x");
-	light = new CLight( LightType_Directional);
-	light->useLight();
+	//mesh = new CXMesh( "tiger.x");
+	//light = new CLight( LightType_Directional);
+	//light->useLight();
 	//mir = new CMirror;
-	m_pShader = new CVertexShader;
-	m_pPixelShader = new CPixelShader;
+	//m_pShader = new CVertexShader;
+	//m_pPixelShader = new CPixelShader;
+	m_pShaderEffect = new CShaderEffect;
+	m_pShaderEffect->setConstant();
 	while( WM_QUIT != msg.message )
 	{
 		if( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
@@ -211,12 +213,16 @@ void CWin::render( float dt)
 	{
 		D3DXMATRIX viewMatrix;
 		camera->getViewMatrix( &viewMatrix);
-		m_pShader->setConstant( &viewMatrix);
+
+		//m_pShader->setConstant( &viewMatrix);
 		//m_pPixelShader->setShader();
+
 		//mir->drawMirror(); //绘制镜子
-		mesh->setPosition( 0.0,0.0,4);
-		mesh->useMesh();
+		//mesh->setPosition( 0.0,0.0,4);
+		//mesh->useMesh();
 		//mir->renderMirror( mesh); //绘制镜子中反射出的物体
+
+		m_pShaderEffect->setShader();
 
 		if( showFPS)
 			calcFPS( dt);
